@@ -1,7 +1,5 @@
-import { NuxtConfig } from "nuxt/schema";
-
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/i18n"],
+  modules: ["@nuxtjs/i18n", '@pinia/nuxt'],
   srcDir: "src",
   i18n: {
     locales: [{ code: "en", iso: "en_US", file: "en.json" }],
@@ -9,5 +7,5 @@ export default defineNuxtConfig({
     langDir: "locales/",
     lazy: true,
     customRoutes: "config",
-  } satisfies NuxtConfig["i18n"],
+  }
 });
