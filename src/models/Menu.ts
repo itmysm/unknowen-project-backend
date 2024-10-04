@@ -1,7 +1,7 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document } from "mongoose";
 
 interface IMenu extends Document {
-  id: number,
+  id: number;
   title: string;
   description?: string;
   slug: string;
@@ -10,12 +10,12 @@ interface IMenu extends Document {
 }
 
 const menuSchema: Schema = new Schema({
-  id: { type: Number, required: true, unique: true },
+  id: { type: Number, required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
-  slug: { type: String, required: true, unique: true },
-  image_slug: { type: String, required: true, unique: true },
+  slug: { type: String, required: true },
+  image_slug: { type: String, required: true },
   parentId: { type: Number, required: true },
 });
 
-export const Menu = mongoose.model<IMenu>('Menu', menuSchema);
+export const Menu = mongoose.model<IMenu>("Menu", menuSchema);
