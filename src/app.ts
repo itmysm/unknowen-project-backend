@@ -5,6 +5,7 @@ import connectDB from "./config/db";
 import menuRoutes from "./routes/menuRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
 import { setupSwaggerDocs } from "./swagger";
+import routes from "./routes";
 
 dotenv.config();
 
@@ -24,14 +25,11 @@ app.use(function (req, res, next) {
 // Middleware
 app.use(bodyParser.json());
 
-// Base route for Menu
-app.use("/api", menuRoutes);
+routes(app);
 
-// Error handling middleware
 app.use(errorHandler);
 
-// Setup Swagger Documentation
-setupSwaggerDocs(app); // Call setupSwaggerDocs directly with app
+setupSwaggerDocs(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -46,6 +46,21 @@ const swaggerDefinition = {
           },
         },
       },
+      Product: {
+        type: "object",
+        properties: {
+          id: { type: "number", description: "Product ID" },
+          title: { type: "string", description: "Product title" },
+          description: { type: "string", description: "Product description" },
+          slug: { type: "string", description: "Product slug" },
+          image_slug: { type: "string", description: "Product image slug" },
+          views: { type: "number", description: "Number of views" },
+          categoryId: { type: "number", description: "Category ID" },
+          productType: { type: "string", description: "Type of product" },
+          directPath: { type: "string", description: "Path of product" },
+
+        },
+      },
     },
   },
 };

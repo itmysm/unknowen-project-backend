@@ -33,7 +33,9 @@ export const getAllMenus = async (req: Request, res: Response): Promise<Response
 // Get Menu by ID
 export const getMenuById = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const menu = await Menu.findById(req.params.id);
+    const menuId = parseInt(req.params.id);
+    const menu = await Menu.findOne({ id: menuId });
+
     if (!menu) {
       return res.status(404).json({ message: "Menu not found" });
     }

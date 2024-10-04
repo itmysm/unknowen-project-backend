@@ -5,9 +5,17 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   - name: Menus
+ *     description: Menu management API
+ */
+
+/**
+ * @swagger
  * /menus:
  *   get:
  *     summary: Get all menus
+ *     tags: [Menus]
  *     responses:
  *       200:
  *         description: A list of menus
@@ -18,13 +26,14 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/Menu'
  */
-router.get("/menus", getAllMenus);
+router.get("/", getAllMenus);
 
 /**
  * @swagger
  * /menus:
  *   post:
  *     summary: Create a new menu
+ *     tags: [Menus]
  *     requestBody:
  *       required: true
  *       content:
@@ -35,13 +44,14 @@ router.get("/menus", getAllMenus);
  *       201:
  *         description: Menu created successfully
  */
-router.post("/menus", createMenu);
+router.post("/", createMenu);
 
 /**
  * @swagger
  * /menus/{id}:
  *   get:
  *     summary: Get menu by ID
+ *     tags: [Menus]
  *     parameters:
  *       - in: path
  *         name: id
@@ -59,13 +69,14 @@ router.post("/menus", createMenu);
  *       404:
  *         description: Menu not found
  */
-router.get("/menus/:id", getMenuById);
+router.get("/:id", getMenuById);
 
 /**
  * @swagger
  * /menus/{id}:
  *   put:
  *     summary: Update a menu
+ *     tags: [Menus]
  *     parameters:
  *       - in: path
  *         name: id
@@ -85,13 +96,14 @@ router.get("/menus/:id", getMenuById);
  *       404:
  *         description: Menu not found
  */
-router.put("/menus/:id", updateMenu);
+router.put("/:id", updateMenu);
 
 /**
  * @swagger
  * /menus/{id}:
  *   delete:
  *     summary: Delete a menu by ID
+ *     tags: [Menus]
  *     parameters:
  *       - in: path
  *         name: id
@@ -105,6 +117,6 @@ router.put("/menus/:id", updateMenu);
  *       404:
  *         description: Menu not found
  */
-router.delete("/menus/:id", deleteMenu);
+router.delete("/:id", deleteMenu);
 
 export default router;
