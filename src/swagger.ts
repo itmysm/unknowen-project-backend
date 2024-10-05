@@ -61,6 +61,24 @@ const swaggerDefinition = {
 
         },
       },
+      ProductTranslation: {
+        type: 'object',
+        properties: {
+          parentId: { type: 'integer' },
+          lang: { type: 'string' },
+          title: { type: 'string' },
+          description: { type: 'string' },
+          meta_keywords: {
+            type: 'array',
+            items: { type: 'string' },
+          },
+          meta_description: {
+            type: 'array',
+            items: { type: 'string' },
+          },
+          content: { type: 'object' },
+        },
+      },
     },
   },
 };

@@ -62,7 +62,9 @@ export const updateMenu = async (req: Request, res: Response): Promise<Response>
 // Delete Menu
 export const deleteMenu = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const menu = await Menu.findByIdAndDelete(req.params.id);
+    const menuId = parseInt(req.params.id);
+    const menu = await Menu.findOne({ id: menuId });
+
     if (!menu) {
       return res.status(404).json({ message: "Menu not found" });
     }
