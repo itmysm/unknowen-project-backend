@@ -2,13 +2,14 @@ import { Request, Response } from "express";
 import { Product } from "../models/Product";
 
 // Create Product
-export const createProduct = async (req: Request, res: Response): Promise<Response> => {
+export const createProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id, title, description, slug, image_slug, views, related, categoryId, productType, directPath } = req.body;
 
     // Ensure all required fields are provided
     if (!id || !title || !description || !slug || !image_slug || views === undefined || !categoryId || !productType || !directPath) {
-      return res.status(400).json({ message: "All required fields must be provided." });
+      res.status(400).json({ message: "All required fields must be provided." });
+      return;
     }
 
     const newProduct = new Product({
@@ -25,38 +26,39 @@ export const createProduct = async (req: Request, res: Response): Promise<Respon
     });
 
     const savedProduct = await newProduct.save();
-    return res.status(201).json(savedProduct);
+    res.status(201).json(savedProduct);
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
 // Get All Products
-export const getAllProducts = async (req: Request, res: Response): Promise<Response> => {
+export const getAllProducts = async (req: Request, res: Response): Promise<void> => {
   try {
     const products = await Product.find();
-    return res.status(200).json(products);
+    res.status(200).json(products);
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
 // Get Product by ID
-export const getProductById = async (req: Request, res: Response): Promise<Response> => {
+export const getProductById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const productId = parseInt(req.params.id);
-    const product = await Product.findOne({ id: productId }); 
+    const productId = req.params.id;
+    const product = await Product.findOne({ id: productId });
     if (!product) {
-      return res.status(404).json({ message: "Product not found" });
+      res.status(404).json({ message: "Product not found" });
+      return;
     }
-    return res.status(200).json(product);
+    res.status(200).json(product);
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
 // Update Product
-export const updateProduct = async (req: Request, res: Response): Promise<Response> => {
+export const updateProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const { title, description, slug, image_slug, views, related, categoryId, productType, directPath } = req.body;
 
@@ -67,24 +69,26 @@ export const updateProduct = async (req: Request, res: Response): Promise<Respon
     );
 
     if (!updatedProduct) {
-      return res.status(404).json({ message: "Product not found" });
+      res.status(404).json({ message: "Product not found" });
+      return;
     }
 
-    return res.status(200).json(updatedProduct);
+    res.status(200).json(updatedProduct);
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
 // Delete Product
-export const deleteProduct = async (req: Request, res: Response): Promise<Response> => {
+export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
     if (!deletedProduct) {
-      return res.status(404).json({ message: "Product not found" });
+      res.status(404).json({ message: "Product not found" });
+      return;
     }
-    return res.status(200).json({ message: "Product deleted" });
+    res.status(200).json({ message: "Product deleted" });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
