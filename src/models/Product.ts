@@ -12,6 +12,7 @@ interface IProduct extends Document {
   categoryId: number;
   productType: ProductTypes;
   directPath: string;
+  isMultiLang: boolean
 }
 
 const productSchema: Schema = new Schema({
@@ -23,8 +24,9 @@ const productSchema: Schema = new Schema({
   views: { type: Number, required: true },
   categoryId: { type: Number, required: true },
   productType: { type: String, required: true },
+  isMultiLang: { type: Boolean, required: true },
   related: { type: Array },
-  directPath: {type: String}
+  directPath: { type: String }
 });
 
 export const Product = mongoose.model<IProduct>("Product", productSchema);

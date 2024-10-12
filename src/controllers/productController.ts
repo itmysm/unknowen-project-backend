@@ -4,10 +4,10 @@ import { Product } from "../models/Product";
 // Create Product
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { id, title, description, slug, image_slug, views, related, categoryId, productType, directPath } = req.body;
+    const { id, title, description, slug, image_slug, views, related, categoryId, productType, directPath, isMultiLang } = req.body;
 
     // Ensure all required fields are provided
-    if (!id || !title || !description || !slug || !image_slug || views === undefined || !categoryId || !productType || !directPath) {
+    if (!id || !title || !description || !slug || !image_slug || views === undefined || !categoryId || !productType || !directPath || !isMultiLang) {
       res.status(400).json({ message: "All required fields must be provided." });
       return;
     }
@@ -23,6 +23,7 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
       categoryId,
       productType,
       directPath,
+      isMultiLang
     });
 
     const savedProduct = await newProduct.save();
@@ -60,11 +61,11 @@ export const getProductById = async (req: Request, res: Response): Promise<void>
 // Update Product
 export const updateProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { title, description, slug, image_slug, views, related, categoryId, productType, directPath } = req.body;
+    const { title, description, slug, image_slug, views, related, categoryId, productType, directPath, isMultiLang } = req.body;
 
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      { title, description, slug, image_slug, views, related, categoryId, productType, directPath },
+    const updatedProduct = await Product.findOneAndUpdate(
+      { id: parseInt(req.params.id) }, // Query by `id`, not `_id`
+      { title, description, slug, image_slug, views, related, categoryId, productType, directPath, isMultiLang },
       { new: true }
     );
 
@@ -78,6 +79,7 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
     res.status(500).json({ message: err.message });
   }
 };
+
 
 // Delete Product
 export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
