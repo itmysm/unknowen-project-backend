@@ -57,6 +57,7 @@ const swaggerDefinition = {
           views: { type: "number", description: "Number of views" },
           categoryId: { type: "number", description: "Category ID" },
           productType: { type: "string", description: "Type of product" },
+          subCategories: {type: "Array", description: "related sub categories"},
           directPath: { type: "string", description: "Path of product" },
           isMultiLang: { type: Boolean, description: "Check Product Is Multi Lang or not" }
 

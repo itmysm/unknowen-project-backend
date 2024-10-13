@@ -4,10 +4,10 @@ import { Product } from "../models/Product";
 // Create Product
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { id, title, description, slug, image_slug, views, related, categoryId, productType, directPath, isMultiLang } = req.body;
+    const { id, title, description, slug, image_slug, views, related, categoryId, productType, directPath, isMultiLang, subCategories } = req.body;
 
     // Ensure all required fields are provided
-    if (!id || !title || !description || !slug || !image_slug || views === undefined || !categoryId || !productType || !directPath || !isMultiLang) {
+    if (!id || !title || !description || !slug || !image_slug || views === undefined || !categoryId || !productType || !directPath || !isMultiLang || !subCategories) {
       res.status(400).json({ message: "All required fields must be provided." });
       return;
     }
@@ -23,7 +23,8 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
       categoryId,
       productType,
       directPath,
-      isMultiLang
+      isMultiLang,
+      subCategories
     });
 
     const savedProduct = await newProduct.save();
@@ -61,11 +62,11 @@ export const getProductById = async (req: Request, res: Response): Promise<void>
 // Update Product
 export const updateProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { title, description, slug, image_slug, views, related, categoryId, productType, directPath, isMultiLang } = req.body;
+    const { title, description, slug, image_slug, views, related, categoryId, productType, directPath, isMultiLang, subCategories } = req.body;
 
     const updatedProduct = await Product.findOneAndUpdate(
       { id: parseInt(req.params.id) }, // Query by `id`, not `_id`
-      { title, description, slug, image_slug, views, related, categoryId, productType, directPath, isMultiLang },
+      { title, description, slug, image_slug, views, related, categoryId, productType, directPath, isMultiLang, subCategories },
       { new: true }
     );
 

@@ -12,7 +12,8 @@ interface IProduct extends Document {
   categoryId: number;
   productType: ProductTypes;
   directPath: string;
-  isMultiLang: boolean
+  isMultiLang: boolean,
+  subCategories: number[]
 }
 
 const productSchema: Schema = new Schema({
@@ -25,6 +26,7 @@ const productSchema: Schema = new Schema({
   categoryId: { type: Number, required: true },
   productType: { type: String, required: true },
   isMultiLang: { type: Boolean, required: true },
+  subCategories: { type: Array, required: true },
   related: { type: Array },
   directPath: { type: String }
 });
