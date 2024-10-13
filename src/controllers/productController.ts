@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Product } from "../models/Product";
+import { Menu } from "../models/Menu";
 
 // Create Product
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
@@ -24,7 +25,7 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
       productType,
       directPath,
       isMultiLang,
-      subCategories
+      subCategories,
     });
 
     const savedProduct = await newProduct.save();
@@ -81,7 +82,6 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
   }
 };
 
-
 // Delete Product
 export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -93,5 +93,48 @@ export const deleteProduct = async (req: Request, res: Response): Promise<void> 
     res.status(200).json({ message: "Product deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+// Get all products by main category and split by subcategories
+export const getProductsByMainCategory = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const mainCategoryId = parseInt(req.params.categoryId);
+
+    // Fetch all products where the main category ID matches
+    const products = await Product.find({ categoryId: mainCategoryId });
+
+    if (!products || products.length === 0) {
+      return res.status(404).json({ message: "No products found for this main category" });
+    }
+
+    // Fetch subcategories (ids >= 100) from the Menu table
+    const subCategories = await Menu.find({ id: { $gte: 100 } });
+
+    // Create a map of subcategoryId -> subcategoryTitle
+    const subcategoryMap = subCategories.reduce((acc: any, subcategory) => {
+      acc[subcategory.id] = subcategory.title; // Assuming `title` is the subcategory name in Menu
+      return acc;
+    }, {});
+
+    // Group products by their subcategories
+    const groupedBySubcategory = products.reduce((acc: any, product) => {
+      product.subCategories.forEach((subcategoryId: number) => {
+        // Use the real subcategory title from the subcategoryMap
+        const subcategoryTitle = subcategoryMap[subcategoryId] || `Subcategory ${subcategoryId}`;
+
+        if (!acc[subcategoryTitle]) {
+          acc[subcategoryTitle] = [];
+        }
+        acc[subcategoryTitle].push(product);
+      });
+
+      return acc;
+    }, {});
+
+    // Send the grouped products in the response
+    return res.status(200).json(groupedBySubcategory);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
   }
 };

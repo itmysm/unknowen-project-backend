@@ -1,5 +1,5 @@
 import express from "express";
-import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct } from "../controllers/productController";
+import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct, getProductsByMainCategory } from "../controllers/productController";
 
 const router = express.Router();
 
@@ -118,5 +118,32 @@ router.put("/:id", updateProduct);
  *         description: Product not found
  */
 router.delete("/:id", deleteProduct);
+
+/**
+ * @swagger
+ * /products/categories/{categoryId}:
+ *   get:
+ *     summary: Get all products by main category and split by subcategories
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: categoryId
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: ID of the main category
+ *     responses:
+ *       200:
+ *         description: Products grouped by subcategories
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               additionalProperties:
+ *                 type: array
+ *                 items:
+ *                   $ref: '#/components/schemas/Product'
+ */
+router.get("/categories/:categoryId", getProductsByMainCategory);
 
 export default router;
