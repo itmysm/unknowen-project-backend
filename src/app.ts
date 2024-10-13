@@ -2,10 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import connectDB from "./config/db";
-import menuRoutes from "./routes/menuRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
 import { setupSwaggerDocs } from "./swagger";
 import routes from "./routes";
+import { responseWrapperMiddleware } from "./middlewares/responseWrapperMiddleware";
 
 dotenv.config();
 
@@ -24,6 +24,9 @@ app.use(function (req, res, next) {
 
 // Middleware
 app.use(bodyParser.json());
+
+// wrap response in format
+app.use(responseWrapperMiddleware);
 
 routes(app);
 
