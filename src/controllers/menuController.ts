@@ -24,7 +24,14 @@ export const createMenu = async (req: Request, res: Response): Promise<void> => 
 export const getAllMenus = async (req: Request, res: Response): Promise<void> => {
   try {
     const menus = await Menu.find();
-    res.json(menus);
+
+    const categories = menus.filter(menu => menu.id >= 1 && menu.id <= 99);
+    const subCategories = menus.filter(menu => menu.id >= 100 && menu.id <= 999);
+
+    res.json({
+      categories,
+      subCategories
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
