@@ -97,7 +97,7 @@ export const deleteProduct = async (req: Request, res: Response): Promise<void> 
 };
 
 // Get all products by main category and split by subcategories
-export const getProductsByMainCategory = async (req: Request, res: Response): Promise<Response> => {
+export const getProductsByMainCategory = async (req: Request, res: Response): Promise<void> => {
   try {
     const mainCategoryId = parseInt(req.params.categoryId);
 
@@ -105,7 +105,8 @@ export const getProductsByMainCategory = async (req: Request, res: Response): Pr
     const products = await Product.find({ categoryId: mainCategoryId });
 
     if (!products || products.length === 0) {
-      return res.status(404).json({ message: "No products found for this main category" });
+      res.status(404).json({ message: "No products found for this main category" });
+      return 
     }
 
     // Fetch subcategories (ids >= 100) from the Menu table
@@ -132,9 +133,10 @@ export const getProductsByMainCategory = async (req: Request, res: Response): Pr
       return acc;
     }, {});
 
-    // Send the grouped products in the response
-    return res.status(200).json(groupedBySubcategory);
+    res.status(200).json(groupedBySubcategory);
+    return 
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message });
+    return 
   }
 };
