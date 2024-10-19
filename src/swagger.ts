@@ -57,7 +57,7 @@ const swaggerDefinition = {
           views: { type: "number", description: "Number of views" },
           categoryId: { type: "number", description: "Category ID" },
           productType: { type: "string", description: "Type of product" },
-          subCategories: {type: "Array", description: "related sub categories"},
+          subCategories: { type: "Array", description: "related sub categories" },
           directPath: { type: "string", description: "Path of product" },
           isMultiLang: { type: Boolean, description: "Check Product Is Multi Lang or not" }
 
@@ -81,6 +81,16 @@ const swaggerDefinition = {
           content: { type: 'object' },
         },
       },
+      Quizzes: {
+        type: "object",
+        properties: {
+          title: { type: "string", description: "Title of the quiz" },
+          description: { type: "string", description: "Description of the quiz" },
+          questions: { type: "object", description: "Quiz questions in JSON format" },
+          isTimeBased: { type: "boolean", description: "Is the quiz time-based?" },
+          isTimeBasedPreQuestion: { type: "number", description: "Time per question if time-based" },
+        },
+      }
     },
   },
 };

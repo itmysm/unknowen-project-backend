@@ -30,7 +30,7 @@ const router = express.Router();
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Quiz'
+ *                 $ref: '#/components/schemas/Quizzes'
  */
 router.get("/", getAllQuizzes);
 
@@ -53,7 +53,7 @@ router.get("/", getAllQuizzes);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Quiz'
+ *               $ref: '#/components/schemas/Quizzes'
  *       404:
  *         description: Quiz not found
  */
@@ -70,7 +70,7 @@ router.get("/:id", getQuizById);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Quiz'
+ *             $ref: '#/components/schemas/Quizzes'
  *     responses:
  *       201:
  *         description: Quiz created successfully
@@ -95,7 +95,7 @@ router.post("/", createQuiz);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Quiz'
+ *             $ref: '#/components/schemas/Quizzes'
  *     responses:
  *       200:
  *         description: Quiz updated successfully
