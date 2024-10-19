@@ -84,6 +84,7 @@ const swaggerDefinition = {
       Quizzes: {
         type: "object",
         properties: {
+          id: { type: "number", description: "Quiz ID" },
           title: { type: "string", description: "Title of the quiz" },
           description: { type: "string", description: "Description of the quiz" },
           questions: { type: "Array", description: "Quiz questions in JSON format" },
