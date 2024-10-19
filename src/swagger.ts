@@ -86,7 +86,7 @@ const swaggerDefinition = {
         properties: {
           title: { type: "string", description: "Title of the quiz" },
           description: { type: "string", description: "Description of the quiz" },
-          questions: { type: "object", description: "Quiz questions in JSON format" },
+          questions: { type: "Array", description: "Quiz questions in JSON format" },
           isTimeBased: { type: "boolean", description: "Is the quiz time-based?" },
           isTimeBasedPreQuestion: { type: "number", description: "Time per question if time-based" },
         },
